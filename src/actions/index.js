@@ -7,6 +7,7 @@ export const READ = "READ";
 export const CLEAR_DISPLAY = "CLEAR_DISPLAY";
 export const CLEAR_MEM = "CLEAR_MEM";
 export const SAVE = "SAVE";
+export const EVALUATE = "EVALUATE";
 
 export const addOne = () => {
    return { type: ADD_ONE };

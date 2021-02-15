@@ -11,6 +11,25 @@ function App() {
    const [state, dispatch] = useReducer(reducer, initialState);
    //  console.log(use);
 
+   const whatToDisplay = () => {
+      if (state.total !== 0 && state.num1 === 0) {
+         //  console.log("reach?");
+         // I guess total could be factored out, but since it works I'll just leave it as is.
+         return state.total;
+      }
+      if (state.operation.length === 0 || state.num2 === 0) {
+         return state.num1;
+      }
+      if (state.total === 0 || state.displaynum2) {
+         if (state.operation === "-" && !state.displaynum2) {
+            return state.total;
+         }
+         return state.num2;
+      }
+
+      return state.total;
+   };
+
    return (
       <div className="App">
          <nav className="navbar navbar-dark bg-dark">
@@ -23,7 +42,7 @@ function App() {
          <div className="container row mt-5">
             <div className="col-md-12 d-flex justify-content-center">
                <form name="Cal">
-                  <TotalDisplay value={state.total} />
+                  <TotalDisplay value={whatToDisplay()} />
                   <div className="row details">
                      <span id="operation">
                         <b>Operation:</b> {state.operation}
@@ -98,22 +117,41 @@ function App() {
                         onClick={() => dispatch(applyNumber(9))}
                      />
                   </div>
-
                   <div className="row">
                      <CalcButton
                         value={"+"}
                         onClick={() => dispatch(changeOperation("+"))}
                      />
                      <CalcButton
-                        value={"*"}
-                        onClick={() => dispatch(changeOperation("*"))}
+                        value={0}
+                        onClick={() => dispatch(applyNumber(0))}
                      />
                      <CalcButton
                         value={"-"}
                         onClick={() => dispatch(changeOperation("-"))}
                      />
                   </div>
-
+                  <div className="row">
+                     <CalcButton
+                        value={"*"}
+                        onClick={() => dispatch(changeOperation("*"))}
+                     />
+                     <CalcButton
+                        value={"/"}
+                        onClick={() => dispatch(changeOperation("/"))}
+                     />
+                     <CalcButton
+                        value={"="}
+                        state={state}
+                        type={"EVALUATE"}
+                        // size={7}
+                        dispatch={dispatch}
+                     />
+                  </div>
+                  {/* 
+                  <div className="row ce_button">
+  
+                  </div> */}
                   <div className="row ce_button">
                      <CalcButton
                         value={"CE"}

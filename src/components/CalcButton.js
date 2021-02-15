@@ -11,7 +11,7 @@ const CalcButton = (props) => {
          : () => {
               dispatch({ type: type, payload: payload });
            },
-      size = 4,
+      size = props.size ? props.size : 4,
    } = props;
 
    return (
